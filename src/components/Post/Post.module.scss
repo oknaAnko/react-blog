@@ -1,0 +1,26 @@
+.post {
+  width: 75%;
+  margin: 30px auto 3rem auto;
+  padding: 3rem;
+  border: 1px solid #e9eef1;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px #d0d1d1;
+  color: #2d363a;
+
+  &__title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &__post-body {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+  }
+
+  &__text {
+    font-size: 1.5rem;
+  }
+}
