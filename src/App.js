@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { fetchPosts } from './redux/actions';
 
-import HomePage from './pages/HomePage';
-import PostPage from './pages/PostPage';
-import NotFoundPage from './pages/NotFoundPage';
+import HomePage from './pages/HomePage/HomePage';
+import PostPage from './pages/PostPage/PostPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 import './App.scss';
 
