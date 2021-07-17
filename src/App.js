@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
-import { fetchPosts } from './redux/actions';
+import { fetchComments, fetchPosts } from './redux/actions';
 
 import HomePage from './pages/HomePage/HomePage';
 import PostPage from './pages/PostPage/PostPage';
@@ -14,7 +14,8 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchPosts())
+        dispatch(fetchPosts());
+        dispatch(fetchComments());
     }, [])
 
     return (

@@ -26,3 +26,29 @@ export const fetchPosts = () => dispatch => {
             dispatch(postsFetchedFail(error))
         });
 };
+
+const commentsFetchedRequest = () => ({
+    type: types.FETCH_COMMENTS_REQUEST
+});
+
+const commentsFetchedSuccess = comments => ({
+    type: types.FETCH_COMMENTS_SUCCESS,
+    payload: comments
+});
+
+const commentsFetchedFail = error => ({
+    type: types.FETCH_COMMENTS_FAIL,
+    payload: error
+});
+
+export const fetchComments = () => dispatch => {
+    dispatch(commentsFetchedRequest());
+    return axios.get('https://jsonplaceholder.typicode.com/comments')
+        .then(response => response.data)
+        .then(comments => {
+            dispatch(commentsFetchedSuccess(comments))
+        })
+        .catch(error => {
+            dispatch(commentsFetchedFail(error))
+        });
+};
