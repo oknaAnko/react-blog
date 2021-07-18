@@ -19,4 +19,9 @@
     padding: 5px 10px;
     @include btn;
   }
+
+  &__text {
+    font-size: 1.5rem;
+    font-style: italic;
+  }
 }
