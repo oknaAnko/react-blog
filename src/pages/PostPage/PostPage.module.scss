@@ -1,3 +1,5 @@
+@import "../../sass/mixins.scss";
+
 .post-page {
   width: 75%;
   margin: 30px auto 3rem auto;
@@ -10,5 +12,11 @@
   &__title {
     font-size: 1.6rem;
     margin-bottom: 20px;
+  }
+
+  &__btn {
+    margin: 10px auto;
+    padding: 5px 10px;
+    @include btn;
   }
 }

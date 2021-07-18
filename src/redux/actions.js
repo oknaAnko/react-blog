@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { types } from './constants';
 
+//fetch posts
 const postsFetchedRequest = () => ({
     type: types.FETCH_POSTS_REQUEST
 });
@@ -27,6 +28,7 @@ export const fetchPosts = () => dispatch => {
         });
 };
 
+//fetch comments
 const commentsFetchedRequest = () => ({
     type: types.FETCH_COMMENTS_REQUEST
 });
@@ -51,4 +53,27 @@ export const fetchComments = () => dispatch => {
         .catch(error => {
             dispatch(commentsFetchedFail(error))
         });
+};
+
+//add comment
+const commentAddedSuccess = comment => ({
+    type: types.ADD_COMMENT_SUCCESS,
+    payload: comment
+});
+
+const commentAddedFail = error => ({
+    type: types.ADD_COMMENT_FAIL,
+    payload: error
+});
+
+export const addComment = newComment => dispatch => {
+    const postId = newComment.postId
+    return axios.post(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`, newComment)
+        .then(response => response.data)
+        .then(comment => {
+            dispatch(commentAddedSuccess(comment))
+        })
+        .catch(error => {
+            dispatch(commentAddedFail(error))
+        })
 };

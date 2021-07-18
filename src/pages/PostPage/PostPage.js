@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import bemCssModules from 'bem-css-modules';
 
-import Post from '../../components/Post/Post';
 import Comment from '../../components/Comment/Comment';
+import CommentForm from '../../components/CommentForm/CommentForm';
+import Post from '../../components/Post/Post';
+
 import { default as PostPageStyles } from './PostPage.module.scss';
 
 const style = bemCssModules(PostPageStyles);
@@ -11,17 +13,24 @@ const style = bemCssModules(PostPageStyles);
 
 const PostPage = ({ match }) => {
     const allPosts = useSelector(state => state.posts.posts);
-    const allComments = useSelector(state => state.comments.comments);
+    const allComments = useSelector(state => state.comments.commentsList.comments);
 
     const postDetails = allPosts
         .filter(post => post.id === Number(match.params.id))
         .map(post => <Post key={post.id} {...post} />);
 
-    const postComments = allComments
-        .filter(comment => comment.postId === Number(match.params.id))
-        .map(comment => <Comment key={comment.id} {...comment} />)
+    const postCommentsTable = allComments
+        .filter(comment => comment.postId === Number(match.params.id));
 
-    console.log(postComments);
+    const [currentComments, setCurrentComments] = useState(postCommentsTable);
+    const [isVisible, setIsVisible] = useState(false);
+
+    const postComments = currentComments
+        .map(comment => <Comment key={comment.id} {...comment} />);
+
+    const handleToggleVisibleClick = () => setIsVisible(prev => !prev);
+
+    const setBtnLabel = isVisible ? "Nie, jednak rezygnuję" : "Napisz komentarz";
 
 
     return (
@@ -32,6 +41,11 @@ const PostPage = ({ match }) => {
                 <ul>
                     {postComments}
                 </ul>
+                <button className={style('btn')} onClick={handleToggleVisibleClick}>{setBtnLabel}</button>
+                {isVisible && <CommentForm postId={match.params.id}
+                    currentComments={currentComments}
+                    setCurrentComments={setCurrentComments}
+                    setIsVisible={setIsVisible} />}
             </section>
         </article>
     );

@@ -1,0 +1,30 @@
+@import "../../sass/mixins.scss";
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  &__form-row {
+    display: flex;
+  }
+
+  &__label {
+    width: 100%;
+    font-size: 1.3rem;
+  }
+
+  &__input {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    margin-top: 5px;
+    padding: 5px 0 5px 5px;
+    @include input;
+  }
+
+  &__btn {
+    margin: 10px auto;
+    padding: 5px 10px;
+    @include btn;
+  }
+}
