@@ -1,0 +1,14 @@
+.post-page {
+  width: 75%;
+  margin: 30px auto 3rem auto;
+  padding: 3rem;
+  border: 1px solid #e9eef1;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px #d0d1d1;
+  color: #2d363a;
+
+  &__title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+}

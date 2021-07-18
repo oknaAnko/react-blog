@@ -1,0 +1,22 @@
+.comment {
+  list-style: none;
+  margin-bottom: 30px;
+  border: 1px solid #e9eef1;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px #d0d1d1;
+
+  &__email {
+    font-size: 1.2rem;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  &__comment-body {
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+  }
+}
