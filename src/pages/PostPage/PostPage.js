@@ -1,61 +1,99 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import bemCssModules from 'bem-css-modules';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import bemCssModules from "bem-css-modules";
 
-import Comment from '../../components/Comment/Comment';
-import CommentForm from '../../components/CommentForm/CommentForm';
-import Post from '../../components/Post/Post';
+import { fetchOnePost } from "../../redux/actions";
+import CommentForm from "../../components/CommentForm/CommentForm";
+import Comment from "../../components/Comment/Comment";
+import Post from "../../components/Post/Post";
 
-import { default as PostPageStyles } from './PostPage.module.scss';
+import { default as PostPageStyles } from "./PostPage.module.scss";
 
 const style = bemCssModules(PostPageStyles);
 
-
 const PostPage = ({ match }) => {
-    const allPosts = useSelector(state => state.posts.posts);
-    const allComments = useSelector(state => state.comments.commentsList.comments);
-    const isLoading = useSelector(state => state.comments.commentsList.isLoading);
-    const isCommentListError = useSelector(state => state.comments.commentsList.error);
-    const isNewCommentError = useSelector(state => state.comments.newComment.error);
+  const allPosts = useSelector((state) => state.posts.posts);
+  const onePost = useSelector((state) => state.onePost.post);
 
-    const postDetails = allPosts
-        .filter(post => post.id === Number(match.params.id))
-        .map(post => <Post key={post.id} {...post} />);
+  const allPostsFetched = Array.isArray(allPosts) && allPosts.length;
 
-    const postCommentsTable = allComments
-        .filter(comment => comment.postId === Number(match.params.id));
+  const dispatch = useDispatch();
 
-    const [currentComments, setCurrentComments] = useState(postCommentsTable);
-    const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    if (!allPostsFetched) {
+      dispatch(fetchOnePost(match.params.id));
+    }
+  }, [allPostsFetched]);
 
-    const postComments = currentComments
-        .map(comment => <Comment key={comment.id} {...comment} />);
+  const postDetails = allPosts
+    .filter((post) => post.id === Number(match.params.id))
+    .map((post) => <Post key={post.id} {...post} />);
 
-    const handleToggleVisibleClick = () => setIsVisible(prev => !prev);
+  const onePostDetails = [onePost].map((post) => <Post {...post} />);
 
-    const setBtnLabel = isVisible ? "Nie, jednak rezygnuję" : "Napisz komentarz";
+  const allComments = useSelector(
+    (state) => state.comments.commentsList.comments
+  );
+  const isLoading = useSelector(
+    (state) => state.comments.commentsList.isLoading
+  );
+  const isCommentListError = useSelector(
+    (state) => state.comments.commentsList.error
+  );
+  const isNewCommentError = useSelector(
+    (state) => state.comments.newComment.error
+  );
 
+  const postCommentsTable = allComments.filter(
+    (comment) => comment.postId === Number(match.params.id)
+  );
 
-    return (
-        <article className={style()}>
-            {postDetails}
-            <section>
-                <h4 className={style('title')}>Komentarze</h4>
-                {isLoading && <p className={style('text')}>Trwa ładowanie komentarzy...</p>}
-                <ul>
-                    {postComments}
-                </ul>
-                {isCommentListError && <p className={style('text')}>Przepraszamy, nie można wyświetlić komentarzy</p>}
-                {isNewCommentError && <p className={style('text')}>Przepraszamy, nie można dodać komentarza</p>}
+  const [currentComments, setCurrentComments] = useState(postCommentsTable);
+  const [isVisible, setIsVisible] = useState(false);
 
-                <button className={style('btn')} onClick={handleToggleVisibleClick}>{setBtnLabel}</button>
-                {isVisible && <CommentForm postId={match.params.id}
-                    currentComments={currentComments}
-                    setCurrentComments={setCurrentComments}
-                    setIsVisible={setIsVisible} />}
-            </section>
-        </article>
-    );
-}
+  const postComments = currentComments.map((comment) => (
+    <Comment key={comment.id} {...comment} />
+  ));
+
+  const handleToggleVisibleClick = () => setIsVisible((prev) => !prev);
+
+  const setBtnLabel = isVisible ? "Nie, jednak rezygnuję" : "Napisz komentarz";
+
+  return (
+    <article className={style()}>
+      {postDetails}
+      {onePostDetails}
+      <section>
+        <h4 className={style("title")}>Komentarze</h4>
+        {isLoading && (
+          <p className={style("text")}>Trwa ładowanie komentarzy...</p>
+        )}
+        <ul>{postComments}</ul>
+        {isCommentListError && (
+          <p className={style("text")}>
+            Przepraszamy, nie można wyświetlić komentarzy
+          </p>
+        )}
+        {isNewCommentError && (
+          <p className={style("text")}>
+            Przepraszamy, nie można dodać komentarza
+          </p>
+        )}
+
+        <button className={style("btn")} onClick={handleToggleVisibleClick}>
+          {setBtnLabel}
+        </button>
+        {isVisible && (
+          <CommentForm
+            postId={match.params.id}
+            currentComments={currentComments}
+            setCurrentComments={setCurrentComments}
+            setIsVisible={setIsVisible}
+          />
+        )}
+      </section>
+    </article>
+  );
+};
 
 export default PostPage;
