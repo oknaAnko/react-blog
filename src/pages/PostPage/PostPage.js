@@ -31,9 +31,10 @@ const PostPage = ({ match }) => {
     }
   }, [allPostsFetched]);
 
-  const postDetails = allPosts
-    .filter((post) => post.id === Number(match.params.id))
-    .map((post) => <Post key={post.id} {...post} />);
+  const postDetailsObject = allPosts.find(
+    (post) => post.id === Number(match.params.id)
+  );
+  const postDetails = [postDetailsObject].map((post) => <Post {...post} />);
 
   const onePostDetails = [onePost].map((post) => <Post {...post} />);
 
@@ -67,8 +68,7 @@ const PostPage = ({ match }) => {
 
   return (
     <article className={style()}>
-      {postDetails}
-      {onePostDetails}
+      {allPostsFetched ? postDetails : onePostDetails}
       <section>
         <h4 className={style("title")}>Komentarze</h4>
         {isLoading && (
