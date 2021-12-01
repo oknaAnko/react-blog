@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import bemCssModules from "bem-css-modules";
 
-import { fetchOnePost } from "../../redux/actions";
+import { fetchOnePost, resetStore } from "../../redux/actions";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Comment from "../../components/Comment/Comment";
 import Post from "../../components/Post/Post";
@@ -18,6 +18,12 @@ const PostPage = ({ match }) => {
   const allPostsFetched = Array.isArray(allPosts) && allPosts.length;
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (onePost) {
+      dispatch(resetStore());
+    }
+  }, []);
 
   useEffect(() => {
     if (!allPostsFetched) {

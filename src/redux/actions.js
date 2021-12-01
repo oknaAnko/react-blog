@@ -40,7 +40,7 @@ const onePostFetchedSuccess = (post) => ({
 });
 
 const onePostFetchedFail = (error) => ({
-  type: FETCH_ONE_POST_FAIL,
+  type: types.FETCH_ONE_POST_FAIL,
   payload: error,
 });
 
@@ -56,6 +56,11 @@ export const fetchOnePost = (postId) => (dispatch) => {
       dispatch(onePostFetchedFail(error));
     });
 };
+
+//reset store
+export const resetStore = () => ({
+  type: types.STORE_POST_RESET,
+});
 
 //fetch comments
 const commentsFetchedRequest = () => ({

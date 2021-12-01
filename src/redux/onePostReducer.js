@@ -14,6 +14,8 @@ export const onePostReducer = (state = initialState, action) => {
       return { ...state, isLoading: false, post: action.payload };
     case types.FETCH_ONE_POST_FAIL:
       return { ...state, isLoading: false, error: action.payload };
+    case types.STORE_POST_RESET:
+      return initialState;
     default:
       return state;
   }
