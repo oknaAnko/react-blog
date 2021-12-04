@@ -8,12 +8,20 @@ import Comment from "../../components/Comment/Comment";
 import Post from "../../components/Post/Post";
 
 import { default as PostPageStyles } from "./PostPage.module.scss";
+import { selectors } from "../../redux/selectors";
 
 const style = bemCssModules(PostPageStyles);
 
 const PostPage = ({ match }) => {
-  const allPosts = useSelector((state) => state.posts.posts);
-  const onePost = useSelector((state) => state.onePost.post);
+  const allPosts = useSelector(selectors.getAllPosts);
+  const onePost = useSelector(selectors.getOnePost);
+  const allComments = useSelector(selectors.getAllComments);
+  const isLoading = useSelector(selectors.commentsLoading);
+  const isCommentListError = useSelector(selectors.getCommentsError);
+  const isNewCommentError = useSelector(selectors.getNewCommentError);
+
+  const [currentComments, setCurrentComments] = useState(allComments);
+  const [isVisible, setIsVisible] = useState(false);
 
   const allPostsFetched = Array.isArray(allPosts) && allPosts.length;
 
@@ -41,22 +49,6 @@ const PostPage = ({ match }) => {
   const postDetails = [postDetailsObject].map((post) => <Post {...post} />);
 
   const onePostDetails = [onePost].map((post) => <Post {...post} />);
-
-  const allComments = useSelector(
-    (state) => state.comments.commentsList.comments
-  );
-  const isLoading = useSelector(
-    (state) => state.comments.commentsList.isLoading
-  );
-  const isCommentListError = useSelector(
-    (state) => state.comments.commentsList.error
-  );
-  const isNewCommentError = useSelector(
-    (state) => state.comments.newComment.error
-  );
-
-  const [currentComments, setCurrentComments] = useState(allComments);
-  const [isVisible, setIsVisible] = useState(false);
 
   const postComments = allComments.map((comment) => (
     <Comment key={comment.id} {...comment} />
