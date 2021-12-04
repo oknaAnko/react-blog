@@ -77,10 +77,10 @@ const commentsFetchedFail = (error) => ({
   payload: error,
 });
 
-export const fetchComments = () => (dispatch) => {
+export const fetchComments = (postId) => (dispatch) => {
   dispatch(commentsFetchedRequest());
   return axios
-    .get("https://jsonplaceholder.typicode.com/comments")
+    .get(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
     .then((response) => response.data)
     .then((comments) => {
       dispatch(commentsFetchedSuccess(comments));
