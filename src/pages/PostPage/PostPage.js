@@ -18,9 +18,7 @@ const PostPage = ({ match }) => {
   const allComments = useSelector(selectors.getAllComments);
   const isLoading = useSelector(selectors.commentsLoading);
   const isCommentListError = useSelector(selectors.getCommentsError);
-  const isNewCommentError = useSelector(selectors.getNewCommentError);
 
-  const [currentComments, setCurrentComments] = useState(allComments);
   const [isVisible, setIsVisible] = useState(false);
 
   const allPostsFetched = Array.isArray(allPosts) && allPosts.length;
@@ -72,22 +70,11 @@ const PostPage = ({ match }) => {
             Przepraszamy, nie można wyświetlić komentarzy
           </p>
         )}
-        {isNewCommentError && (
-          <p className={style("text")}>
-            Przepraszamy, nie można dodać komentarza
-          </p>
-        )}
-
         <button className={style("btn")} onClick={handleToggleVisibleClick}>
           {setBtnLabel}
         </button>
         {isVisible && (
-          <CommentForm
-            postId={match.params.id}
-            currentComments={currentComments}
-            setCurrentComments={setCurrentComments}
-            setIsVisible={setIsVisible}
-          />
+          <CommentForm postId={match.params.id} setIsVisible={setIsVisible} />
         )}
       </section>
     </article>

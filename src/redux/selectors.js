@@ -8,6 +8,4 @@ export const selectors = {
   getAllComments: (state) => state.comments.commentsList.comments,
   commentsLoading: (state) => state.comments.commentsList.isLoading,
   getCommentsError: (state) => state.comments.commentsList.error,
-
-  getNewCommentError: (state) => state.comments.newComment.error,
 };
