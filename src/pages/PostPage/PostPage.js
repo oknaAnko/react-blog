@@ -66,9 +66,7 @@ const PostPage = ({ match }) => {
         )}
         <ul>{postComments}</ul>
         {isCommentListError && (
-          <p className={style("text")}>
-            Przepraszamy, nie można wyświetlić komentarzy
-          </p>
+          <p className={style("text")}>Przepraszamy, wystąpił błąd.</p>
         )}
         <button className={style("btn")} onClick={handleToggleVisibleClick}>
           {setBtnLabel}

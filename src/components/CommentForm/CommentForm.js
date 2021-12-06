@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import bemCssModules from "bem-css-modules";
 import { default as CommentFormStyles } from "./CommentForm.module.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addComment } from "../../redux/actions";
 import { v4 as uuidv4 } from "uuid";
+import { selectors } from "../../redux/selectors";
 
 const style = bemCssModules(CommentFormStyles);
 
 const CommentForm = ({ postId, setIsVisible }) => {
+  const isAddCommentError = useSelector(selectors.getCommentsError);
+
   const dispatch = useDispatch();
 
   const [formEmail, setFormEmail] = useState("");
@@ -25,11 +28,12 @@ const CommentForm = ({ postId, setIsVisible }) => {
 
     dispatch(addComment(postId, id, formName, formEmail, formBody));
 
-    setFormEmail("");
-    setFormName("");
-    setFormBody("");
-
-    setIsVisible(false);
+    if (!isAddCommentError) {
+      setFormEmail("");
+      setFormName("");
+      setFormBody("");
+      setIsVisible(false);
+    }
   };
 
   return (

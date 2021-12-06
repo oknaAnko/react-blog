@@ -30,7 +30,6 @@ export const commentReducer = (state = initialState, action) => {
         commentsList: { isLoading: false, comments: [], error: action.payload },
       };
     case types.ADD_COMMENT_SUCCESS:
-      console.log(...state.commentsList.comments);
       return {
         ...state,
         commentsList: {
@@ -42,7 +41,11 @@ export const commentReducer = (state = initialState, action) => {
     case types.ADD_COMMENT_FAIL:
       return {
         ...state,
-        commentsList: { isLoading: false, comments: [], error: action.payload },
+        commentsList: {
+          isLoading: false,
+          comments: state.commentsList.comments,
+          error: action.payload,
+        },
       };
     default:
       return state;
