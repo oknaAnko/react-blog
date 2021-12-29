@@ -1,76 +1,84 @@
-import React, { useState } from 'react';
-import bemCssModules from 'bem-css-modules';
-import { default as CommentFormStyles } from './CommentForm.module.scss';
-import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-
-import { addComment } from '../../redux/actions';
+import React, { useState } from "react";
+import bemCssModules from "bem-css-modules";
+import { default as CommentFormStyles } from "./CommentForm.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { addComment } from "../../redux/actions";
+import { v4 as uuidv4 } from "uuid";
+import { selectors } from "../../redux/selectors";
 
 const style = bemCssModules(CommentFormStyles);
 
-const CommentForm = ({
-    postId,
-    currentComments,
-    setCurrentComments,
-    setIsVisible }) => {
-    const dispatch = useDispatch();
+const CommentForm = ({ postId, setIsVisible }) => {
+  const isAddCommentError = useSelector(selectors.getCommentsError);
 
-    const [formEmail, setFormEmail] = useState('');
-    const [formName, setFormName] = useState('');
-    const [formBody, setFormBody] = useState('');
+  const dispatch = useDispatch();
 
-    const handleOnChangeEmail = e => setFormEmail(e.target.value);
-    const handleOnChangeName = e => setFormName(e.target.value);
-    const handleOnChangeBody = e => setFormBody(e.target.value);
+  const [formEmail, setFormEmail] = useState("");
+  const [formName, setFormName] = useState("");
+  const [formBody, setFormBody] = useState("");
 
-    const handleAddCommentSubmit = postId => e => {
-        e.preventDefault();
+  const handleOnChangeEmail = (e) => setFormEmail(e.target.value);
+  const handleOnChangeName = (e) => setFormName(e.target.value);
+  const handleOnChangeBody = (e) => setFormBody(e.target.value);
 
-        const newComment = {
-            postId,
-            id: uuidv4(),
-            name: formName,
-            email: formEmail,
-            body: formBody,
-        };
+  const handleAddCommentSubmit = (postId) => (e) => {
+    e.preventDefault();
 
-        dispatch(addComment(newComment));
+    const id = uuidv4();
 
-        let newCurrentComments = [...currentComments];
-        newCurrentComments.push(newComment);
-        setCurrentComments(newCurrentComments);
+    dispatch(addComment(postId, id, formName, formEmail, formBody));
 
-        setFormEmail("");
-        setFormName("");
-        setFormBody("");
+    if (!isAddCommentError) {
+      setFormEmail("");
+      setFormName("");
+      setFormBody("");
+      setIsVisible(false);
+    }
+  };
 
-        setIsVisible(false);
-    };
-
-
-    return (
-        <form className={style()} method="submit" onSubmit={handleAddCommentSubmit(postId)}>
-            <div className={style('form-row')}>
-                <label className={style('label')}>
-                    Email:
-                    <input className={style('input')} type="text" value={formEmail} onChange={handleOnChangeEmail} />
-                </label>
-            </div>
-            <div className={style('form-row')}>
-                <label className={style('label')}>
-                    Tytuł:
-                    <input className={style('input')} type="text" value={formName} onChange={handleOnChangeName} />
-                </label>
-            </div>
-            <div className={style('form-row')}>
-                <label className={style('label')}>
-                    Treść:
-                    <textarea className={style('input')} value={formBody} onChange={handleOnChangeBody} />
-                </label>
-            </div>
-            <button className={style('btn')} type="submit">Dodaj</button>
-        </form>
-    );
-}
+  return (
+    <form
+      className={style()}
+      method="submit"
+      onSubmit={handleAddCommentSubmit(postId)}
+    >
+      <div className={style("form-row")}>
+        <label className={style("label")}>
+          Email:
+          <input
+            className={style("input")}
+            type="text"
+            value={formEmail}
+            onChange={handleOnChangeEmail}
+          />
+        </label>
+      </div>
+      <div className={style("form-row")}>
+        <label className={style("label")}>
+          Tytuł:
+          <input
+            className={style("input")}
+            type="text"
+            value={formName}
+            onChange={handleOnChangeName}
+          />
+        </label>
+      </div>
+      <div className={style("form-row")}>
+        <label className={style("label")}>
+          Treść:
+          <textarea
+            className={style("input")}
+            value={formBody}
+            onChange={handleOnChangeBody}
+          />
+        </label>
+      </div>
+      <button className={style("btn")} type="submit">
+        Dodaj
+      </button>
+    </form>
+  );
+};
 
 export default CommentForm;
