@@ -26,31 +26,20 @@ const PostPage = ({ match }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (onePost) {
-      dispatch(resetStore());
-    }
-  }, []);
-
-  useEffect(() => {
     if (!allPostsFetched) {
       dispatch(fetchOnePost(match.params.id));
     }
-  }, [allPostsFetched]);
-
-  useEffect(() => {
     dispatch(fetchComments(match.params.id));
+
+    return () => dispatch(resetStore());
   }, []);
 
-  const postDetailsObject = allPosts.find(
-    (post) => post.id === Number(match.params.id)
-  );
+  const postDetailsObject = allPosts.find((post) => post.id === Number(match.params.id));
   const postDetails = [postDetailsObject].map((post) => <Post {...post} />);
 
   const onePostDetails = [onePost].map((post) => <Post {...post} />);
 
-  const postComments = allComments.map((comment) => (
-    <Comment key={comment.id} {...comment} />
-  ));
+  const postComments = allComments.map((comment) => <Comment key={comment.id} {...comment} />);
 
   const handleToggleVisibleClick = () => setIsVisible((prev) => !prev);
 
@@ -61,19 +50,13 @@ const PostPage = ({ match }) => {
       {allPostsFetched ? postDetails : onePostDetails}
       <section>
         <h4 className={style("title")}>Komentarze</h4>
-        {isLoading && (
-          <p className={style("text")}>Trwa ładowanie komentarzy...</p>
-        )}
+        {isLoading && <p className={style("text")}>Trwa ładowanie komentarzy...</p>}
         <ul>{postComments}</ul>
-        {isCommentListError && (
-          <p className={style("text")}>Przepraszamy, wystąpił błąd.</p>
-        )}
+        {isCommentListError && <p className={style("text")}>Przepraszamy, wystąpił błąd.</p>}
         <button className={style("btn")} onClick={handleToggleVisibleClick}>
           {setBtnLabel}
         </button>
-        {isVisible && (
-          <CommentForm postId={match.params.id} setIsVisible={setIsVisible} />
-        )}
+        {isVisible && <CommentForm postId={match.params.id} setIsVisible={setIsVisible} />}
       </section>
     </article>
   );
