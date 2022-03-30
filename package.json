@@ -37,6 +37,9 @@
     "webpack-merge": "^5.8.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.14.5"
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "file-loader": "^6.2.0",
+    "image-webpack-loader": "^8.1.0",
+    "url-loader": "^4.1.1"
   }
 }
