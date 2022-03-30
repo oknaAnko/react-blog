@@ -5,12 +5,13 @@ import { default as PostStyles } from "./Post.module.scss";
 const style = bemCssModules(PostStyles);
 
 const Post = ({ userId, title, body }) => {
-  console.log("post render");
   return (
-    <section>
+    <section className={style()}>
       <h3 className={style("title")}>{title}</h3>
-      <p className={style("post-body")}>{body}</p>
-      <p className={style("text")}>Post dodany przez: User {userId}</p>
+      <div className={style("post-body-container")}>
+        <p className={style("post-body")}>{body}</p>
+        <p className={style("text")}>Temat rozpoczął: User {userId}</p>
+      </div>
     </section>
   );
 };

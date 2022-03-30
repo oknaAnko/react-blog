@@ -47,17 +47,19 @@ const PostPage = ({ match }) => {
 
   return (
     <article className={style()}>
-      {allPostsFetched ? postDetails : onePostDetails}
-      <section>
-        <h4 className={style("title")}>Komentarze</h4>
-        {isLoading && <p className={style("text")}>Trwa ładowanie komentarzy...</p>}
-        <ul>{postComments}</ul>
-        {isCommentListError && <p className={style("text")}>Przepraszamy, wystąpił błąd.</p>}
-        <button className={style("btn")} onClick={handleToggleVisibleClick}>
-          {setBtnLabel}
-        </button>
-        {isVisible && <CommentForm postId={match.params.id} setIsVisible={setIsVisible} />}
-      </section>
+      <div className={style("post-page")}>
+        {allPostsFetched ? postDetails : onePostDetails}
+        <section className={style("comment-section")}>
+          <h4 className={style("title")}>Rozmawiajmy!</h4>
+          {isLoading && <p className={style("text")}>Trwa ładowanie komentarzy...</p>}
+          <ul>{postComments}</ul>
+          {isCommentListError && <p className={style("text")}>Przepraszamy, wystąpił błąd.</p>}
+          <button className={style("btn")} onClick={handleToggleVisibleClick}>
+            {setBtnLabel}
+          </button>
+          {isVisible && <CommentForm postId={match.params.id} setIsVisible={setIsVisible} />}
+        </section>
+      </div>
     </article>
   );
 };

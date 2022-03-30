@@ -1,19 +1,29 @@
+@import "../../sass/variables.scss";
+
 .post {
   &__title {
     margin-bottom: 20px;
     text-align: center;
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: 600;
     text-transform: uppercase;
+    color: #ffaba9;
+    letter-spacing: 2px;
   }
 
   &__post-body {
-    margin-bottom: 20px;
-    font-size: 1.8rem;
+    margin-left: 50%;
+    margin-top: 50px;
+    font-size: 2rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    line-height: 2.5rem;
   }
 
   &__text {
+    margin-left: 50%;
     margin-bottom: 50px;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    color: #ffaba9;
   }
 }
