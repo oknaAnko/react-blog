@@ -2,7 +2,6 @@
 
 .post-title-link {
   margin-top: 10px;
-
   list-style: none;
   border-radius: 5px;
   box-shadow: 1px 1px 4px black;
@@ -37,6 +36,7 @@
   &__text {
     padding: 10px 0;
     color: $text-color;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-family: "Open Sans", sans-serif;
   }
 }
