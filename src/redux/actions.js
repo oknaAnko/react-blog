@@ -112,26 +112,19 @@ const createCommentObj = (postId, id, name, email, body) => {
   return newComment;
 };
 
-export const addComment =
-  (postId, id, formName, formEmail, formBody) => (dispatch) => {
-    const newComment = createCommentObj(
-      postId,
-      id,
-      formName,
-      formEmail,
-      formBody
-    );
+export const addComment = (postId, id, formName, formEmail, formBody, successCallback) => (dispatch) => {
+  const newComment = createCommentObj(postId, id, formName, formEmail, formBody);
 
-    return axios
-      .post(
-        `https://jsonplaceholder.typicode.com/posts/${postId}/comments`,
-        newComment
-      )
-      .then((response) => response.data)
-      .then((comment) => {
-        dispatch(commentAddedSuccess(comment));
-      })
-      .catch((error) => {
-        dispatch(commentAddedFail(error));
-      });
-  };
+  return axios
+    .post(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`, newComment)
+    .then((response) => response.data)
+    .then((comment) => {
+      dispatch(commentAddedSuccess(comment));
+      if (successCallback) {
+        successCallback();
+      }
+    })
+    .catch((error) => {
+      dispatch(commentAddedFail(error));
+    });
+};

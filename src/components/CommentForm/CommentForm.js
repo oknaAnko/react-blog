@@ -21,57 +21,39 @@ const CommentForm = ({ postId, setIsVisible }) => {
   const handleOnChangeName = (e) => setFormName(e.target.value);
   const handleOnChangeBody = (e) => setFormBody(e.target.value);
 
+  const resetCommentForm = () => {
+    console.log("reset");
+    setFormEmail("");
+    setFormName("");
+    setFormBody("");
+    setIsVisible(false);
+  };
+
   const handleAddCommentSubmit = (postId) => (e) => {
     e.preventDefault();
 
     const id = uuidv4();
-
-    dispatch(addComment(postId, id, formName, formEmail, formBody));
-
-    if (!isAddCommentError) {
-      setFormEmail("");
-      setFormName("");
-      setFormBody("");
-      setIsVisible(false);
-    }
+    dispatch(addComment(postId, id, formName, formEmail, formBody, resetCommentForm));
   };
 
   return (
-    <form
-      className={style()}
-      method="submit"
-      onSubmit={handleAddCommentSubmit(postId)}
-    >
+    <form className={style()} method="submit" onSubmit={handleAddCommentSubmit(postId)}>
       <div className={style("form-row")}>
         <label className={style("label")}>
           Email:
-          <input
-            className={style("input")}
-            type="text"
-            value={formEmail}
-            onChange={handleOnChangeEmail}
-          />
+          <input className={style("input")} type="text" value={formEmail} onChange={handleOnChangeEmail} />
         </label>
       </div>
       <div className={style("form-row")}>
         <label className={style("label")}>
           Tytuł:
-          <input
-            className={style("input")}
-            type="text"
-            value={formName}
-            onChange={handleOnChangeName}
-          />
+          <input className={style("input")} type="text" value={formName} onChange={handleOnChangeName} />
         </label>
       </div>
       <div className={style("form-row")}>
         <label className={style("label")}>
           Treść:
-          <textarea
-            className={style("input")}
-            value={formBody}
-            onChange={handleOnChangeBody}
-          />
+          <textarea className={style("input")} value={formBody} onChange={handleOnChangeBody} />
         </label>
       </div>
       <button className={style("btn")} type="submit">

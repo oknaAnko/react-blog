@@ -19,20 +19,20 @@ const HomePage = () => {
     dispatch(fetchPosts());
   }, []);
 
-  const postsList = allPosts.map((post) => (
-    <PostTitleLink key={post.id} {...post} />
-  ));
+  const postsList = allPosts.map((post) => <PostTitleLink key={post.id} {...post} />);
 
   return (
     <section className={style()}>
-      <h2 className={style("title")}>Zobacz nasze posty!</h2>
+      <div className={style("image")}>
+        <p className={style("image-text")}>Porozmawiajmy o czekoladzie</p>
+      </div>
+      <article className={style("article-about")}>
+        <p>Przed Wami najsłodszy blog na świecie! Rozmawiamy o czekoladzie i... tylko o czekoladzie :D</p>
+      </article>
+      <h2 className={style("title")}>Najnowsze wpisy</h2>
       {isLoading && <p className={style("text")}>Trwa ładowanie postów...</p>}
       <ul className={style("list")}>{postsList}</ul>
-      {isError && (
-        <p className={style("text")}>
-          Przepraszamy, nie można wyświetlić aktualności
-        </p>
-      )}
+      {isError && <p className={style("text")}>Przepraszamy, nie można wyświetlić aktualności</p>}
     </section>
   );
 };

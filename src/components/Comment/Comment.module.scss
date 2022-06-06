@@ -2,12 +2,12 @@
   list-style: none;
   margin-bottom: 30px;
   padding: 5px;
-  border: 1px solid #e9eef1;
   border-radius: 5px;
-  box-shadow: 1px 1px 2px #d0d1d1;
 
   &__email {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    color: #ffaba9;
+    font-weight: 600;
   }
 
   &__title {
@@ -18,6 +18,8 @@
 
   &__comment-body {
     margin-bottom: 20px;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 1px rgb(35, 35, 35);
   }
 }

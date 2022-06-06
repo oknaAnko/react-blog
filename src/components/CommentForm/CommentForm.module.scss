@@ -6,6 +6,7 @@
 
   &__form-row {
     display: flex;
+    margin-top: 20px;
   }
 
   &__label {
@@ -23,7 +24,8 @@
   }
 
   &__btn {
-    margin: 10px auto;
+    align-self: flex-start;
+    margin-top: 20px;
     padding: 5px 10px;
     @include btn;
   }
