@@ -9,21 +9,30 @@
     text-transform: uppercase;
     color: #ffaba9;
     letter-spacing: 2px;
+    text-shadow: 6px 6px 15px #2d363a;
+  }
+
+  &__post-body-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    border-radius: 0.3em;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3) inset, 0 0.5em 1em rgba(0, 0, 0, 0.6);
+    background: #db8c8c91;
+    overflow: hidden;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
   }
 
   &__post-body {
-    margin-left: 50%;
-    margin-top: 50px;
+    text-shadow: 0px 0px 1px #ffededbf;
     font-size: 2rem;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 600;
     line-height: 2.5rem;
   }
 
   &__text {
-    margin-left: 50%;
-    margin-bottom: 50px;
-    font-size: 1.8rem;
-    color: #ffaba9;
+    margin-top: 10px;
+    text-shadow: 0px 0px 1px #ffededbf;
+    font-size: 1.5rem;
   }
 }
