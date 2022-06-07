@@ -54,4 +54,10 @@
     font-size: 1.5rem;
     font-style: italic;
   }
+
+  &__pagination-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
